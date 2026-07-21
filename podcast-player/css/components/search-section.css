@@ -1,0 +1,65 @@
+.section-top {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(clamp(250px, 40%, 400px), 1fr)
+  );
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.subtitle {
+  display: block;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.main-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.search-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin-left: auto;
+}
+
+.search-input {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #171520;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.65em 1em 0.65em 2.8em;
+  border-radius: 20px;
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.search-input:hover {
+  border-color: var(--border-color);
+}
+
+.search-input:focus {
+  border-color: var(--accent);
+}
+
+.search-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+  width: 1.1em;
+  height: 1.1em;
+  z-index: 1;
+}

@@ -1,0 +1,100 @@
+.track-row {
+  display: grid;
+  grid-template-columns: 3rem 1fr auto;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+.track-row:hover,
+.track-row.active-track {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.track-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.track-num .num-play {
+  display: none;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--text-primary);
+}
+
+/* Замена номера на иконку Play при наведении */
+.track-row:hover .track-num .num-text {
+  display: none;
+}
+
+.track-row:hover .track-num .num-play {
+  display: block;
+}
+
+.track-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-right: 1rem;
+  overflow: hidden;
+}
+
+.track-title {
+  margin: 0;
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-author {
+  margin: 0;
+  font-size: clamp(0.8rem, 1vw, 0.875rem);
+  color: var(--text-secondary);
+}
+
+.track-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Появление кнопки '+' при hover */
+.track-add-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.track-add-btn:hover {
+  color: var(--text-primary);
+}
+
+.track-row:hover .track-add-btn {
+  opacity: 1;
+}
+
+.track-duration {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  min-width: 2.5rem;
+  text-align: right;
+}

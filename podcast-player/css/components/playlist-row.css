@@ -1,0 +1,122 @@
+.playlist-row {
+    display: grid;
+    grid-template-columns: 40px 1fr 200px auto;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+    gap: 1rem;
+}
+
+.playlist-row:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.playlist-row.active-row {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.track-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.track-num .num-play {
+    display: none;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--text-primary);
+}
+
+.playlist-row:hover .track-num .num-text {
+    display: none;
+}
+
+.playlist-row:hover .track-num .num-play {
+    display: block;
+}
+
+.track-info-block {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    overflow: hidden;
+}
+
+.track-thumb {
+    width: 42px;
+    height: 42px;
+    border-radius: 4px;
+    flex-shrink: 0;
+}
+
+.track-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    overflow: hidden;
+}
+
+.track-title {
+    margin: 0;
+    font-size: clamp(0.9rem, 1.1vw, 1rem);
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playlist-row.active-row .track-title {
+    color: #1DB954;
+}
+
+.track-author {
+    margin: 0;
+    font-size: clamp(0.78rem, 0.95vw, 0.85rem);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.explicit-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+}
+
+.track-album {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+.added-check {
+    color: #1DB954;
+    width: 1em;
+    height: 1em;
+}
+
+.track-duration {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    min-width: 36px;
+    text-align: right;
+}

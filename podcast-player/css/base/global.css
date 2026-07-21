@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  padding-bottom: 11rem;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+  box-sizing: border-box;
+}
+
+/* ==========================================
+   SVG ИКОНКИ
+   ========================================== */
+.icon {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  vertical-align: middle;
+  background-color: currentColor;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  flex-shrink: 0;
+}
+
+.icon-audio-wave {
+  -webkit-mask-image: url('../../svg/audio-wave.svg');
+  mask-image: url('../../svg/audio-wave.svg');
+}
+.icon-home {
+  -webkit-mask-image: url('../../svg/home.svg');
+  mask-image: url('../../svg/home.svg');
+}
+.icon-playlist {
+  -webkit-mask-image: url('../../svg/play-list.svg');
+  mask-image: url('../../svg/play-list.svg');
+}
+.icon-magnifier {
+  -webkit-mask-image: url('../../svg/magnifier.svg');
+  mask-image: url('../../svg/magnifier.svg');
+}
+.icon-previous {
+  -webkit-mask-image: url('../../svg/previous.svg');
+  mask-image: url('../../svg/previous.svg');
+}
+.icon-pause {
+  -webkit-mask-image: url('../../svg/pause.svg');
+  mask-image: url('../../svg/pause.svg');
+}
+.icon-play {
+  -webkit-mask-image: url('../../svg/play.svg');
+  mask-image: url('../../svg/play.svg');
+}
+.icon-next {
+  -webkit-mask-image: url('../../svg/next.svg');
+  mask-image: url('../../svg/next.svg');
+}
+.icon-plus {
+  -webkit-mask-image: url('../../svg/plus.svg');
+  mask-image: url('../../svg/plus.svg');
+}
+.icon-shuffle {
+  -webkit-mask-image: url('../../svg/shuffle.svg');
+  mask-image: url('../../svg/shuffle.svg');
+}
+.icon-speed {
+  -webkit-mask-image: url('../../svg/speed.svg');
+  mask-image: url('../../svg/speed.svg');
+}
+.icon-volume {
+  -webkit-mask-image: url('../../svg/volume.svg');
+  mask-image: url('../../svg/volume.svg');
+}
+.icon-clock {
+  -webkit-mask-image: url('../../svg/clock.svg');
+  mask-image: url('../../svg/clock.svg');
+}
+.icon-check-mark {
+    -webkit-mask-image: url('../../svg/check-mark.svg');
+    mask-image: url('../../svg/check-mark.svg');
+}

@@ -1,0 +1,6 @@
+@import './base/reset.css';
+@import './base/variables.css';
+@import './base/global.css';
+
+@import './layout/header.css';
+@import './layout/player.css';

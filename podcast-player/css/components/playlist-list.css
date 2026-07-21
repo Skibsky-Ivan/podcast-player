@@ -1,0 +1,42 @@
+.playlist-list {
+    width: 100%;
+}
+
+/* Сетка: # | Название (1fr) | Альбом (200px) | Мета/Время (auto) */
+.playlist-list-header {
+    display: grid;
+    grid-template-columns: 40px 1fr 200px auto;
+    align-items: center;
+    padding: 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    gap: 1rem;
+}
+
+.header-num {
+    text-align: center;
+}
+
+.header-album {
+    text-align: left;
+}
+
+.header-time {
+    padding-right: 0.5rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.playlist-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--border-color);
+    margin: 0.75rem 0;
+}
+
+.playlist-list-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
