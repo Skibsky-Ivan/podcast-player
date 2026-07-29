@@ -1,8 +1,8 @@
 .podcast-hero {
   background: linear-gradient(
     180deg,
-    #7a243d 0%,
-    #2d0b15 65%,
+    #131540 0%,
+    #0b0c2d 65%,
     var(--bg-body) 100%
   );
   padding-block: 2rem 2.5rem;
