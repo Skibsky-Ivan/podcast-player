@@ -1,7 +1,7 @@
-type ComponentProps = Record<string, any>;
-type ComponentState = Record<string, any>;
+export type ComponentProps = Record<string, any>;
+export type ComponentState = Record<string, any>;
 
-interface ComponentOptions {
+export interface ComponentOptions {
   tagName?: string;
   className?: string;
   props?: ComponentProps;
