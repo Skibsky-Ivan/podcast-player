@@ -4,6 +4,7 @@ export type ComponentState = Record<string, any>;
 export interface ComponentOptions {
   tagName?: string;
   className?: string;
+  dataset?: Record<string, string>;
   props?: ComponentProps;
 }
 
@@ -13,13 +14,19 @@ export class Component {
   element: HTMLElement;
 
   constructor(options: ComponentOptions = {}) {
-    const { tagName = 'div', className = '', props = {} } = options;
+    const {
+      tagName = 'div',
+      className = '',
+      dataset = {},
+      props = {},
+    } = options;
 
     this.props = props;
     this.state = {};
 
     this.element = document.createElement(tagName);
     if (className) this.element.className = className;
+    if (dataset) Object.assign(this.element.dataset, dataset);
   }
 
   setState(newState: ComponentState): void {
