@@ -1,5 +1,6 @@
 import { Component, ComponentProps } from '../core/component.ts';
 import { SearchSection } from '../components/search-section.ts';
+import { PadcastList } from '../components/podcast-list.ts';
 
 export class LandingPage extends Component {
   constructor(props: ComponentProps = {}) {
@@ -18,16 +19,17 @@ export class LandingPage extends Component {
   }
 
   afterRender(): void {
-    const searchSlot = this.element.querySelector('#search-slot');
-    const podcastGridSlot = this.element.querySelector('#podcast-list-slot');
+    const searchSlot = this.element.querySelector<HTMLElement>('#search-slot');
+    const podcastListSlot =
+      this.element.querySelector<HTMLElement>('#podcast-list-slot');
 
-    if (searchSlot) {
-      const searchSection = new SearchSection();
-      searchSection.mount(searchSlot as HTMLElement);
-    }
+    if (!searchSlot) throw new Error('нету #search-slot');
+    if (!podcastListSlot) throw new Error('нету #podcast-list-slot');
 
-    if (podcastGridSlot) {
-      // podcast-list
-    }
+    const searchSection = new SearchSection();
+    searchSection.mount(searchSlot);
+
+    const podcastList = new PadcastList();
+    podcastList.mount(podcastListSlot);
   }
 }
