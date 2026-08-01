@@ -17,5 +17,5 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "include": ["src"]
+  "include": ["src", "src/types/types.ts"]
 }

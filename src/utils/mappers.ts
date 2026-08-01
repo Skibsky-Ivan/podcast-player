@@ -1,4 +1,4 @@
-import { Podcast, Episode } from '../types/podcast';
+import { Podcast, Episode } from '../types/types.ts';
 import { formatDuration } from '../utils/format-time.ts';
 
 export function mapFeedToPodcast(feed: any): Podcast {

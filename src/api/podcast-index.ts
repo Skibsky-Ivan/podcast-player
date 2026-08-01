@@ -1,6 +1,6 @@
 import { getAuthHeaders } from './auth.ts';
 import { mapFeedToPodcast, mapItemToEpisode } from '../utils/mappers.ts';
-import type { Podcast, Episode } from '../types/podcast.ts';
+import type { Podcast, Episode } from '../types/types.ts';
 
 const BASE_URL = 'https://api.podcastindex.org/api/1.0';
 
