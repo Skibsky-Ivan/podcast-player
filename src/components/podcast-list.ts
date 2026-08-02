@@ -1,16 +1,18 @@
 import { Component } from '../core/component';
 import { PodcastCard } from './podcast-card';
-import { getBasePodcasts } from '../api/podcast-index';
+import { getBasePodcasts, getSearchPodcasts } from '../api/podcast-index';
 import { Podcast } from '../types/types';
 
 interface PodcastListState {
   podcasts: Podcast[];
   isLoading: boolean;
   error: string | null;
+  currentQuery: string;
 }
 
 export class PadcastList extends Component {
   declare state: PodcastListState;
+  private abortController: AbortController | null = null;
 
   constructor() {
     super({
@@ -22,6 +24,7 @@ export class PadcastList extends Component {
       podcasts: [],
       isLoading: false,
       error: null,
+      currentQuery: '',
     };
   }
 
@@ -49,12 +52,23 @@ export class PadcastList extends Component {
     });
   }
 
-  private async fetchPodcasts() {
+  public async fetchPodcasts(query?: string) {
+    if (this.abortController) this.abortController.abort();
+
+    this.abortController = new AbortController();
+
     try {
-      this.setState({ isLoading: true });
-      const podcasts = await getBasePodcasts();
+      this.setState({ isLoading: true, currentQuety: query });
+
+      const signal = this.abortController.signal;
+      const podcasts = query
+        ? await getSearchPodcasts(query, signal)
+        : await getBasePodcasts(20, signal);
+
       this.setState({ podcasts, isLoading: false });
     } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') return;
+
       const errorMessage =
         error instanceof Error ? error.message : 'error when uploading';
       this.setState({ isLoading: false, error: errorMessage });
@@ -62,12 +76,14 @@ export class PadcastList extends Component {
   }
 
   render(): string {
-    const { isLoading, error, podcasts } = this.state;
+    const { isLoading, error, podcasts, currentQuery } = this.state;
     if (isLoading) {
       return `
         <div class="podcast-list-status">
           <div class="spinner"></div>
-          <span>Загрузка...</span>
+          <span>
+            ${currentQuery ? `Поиск "${currentQuery}"...` : 'Загрузка...'}
+          </span>
         </div>
       `;
     }
@@ -80,11 +96,17 @@ export class PadcastList extends Component {
       `;
     }
     if (podcasts.length === 0) {
-      return `<div class="podcast-list-status">Подкасты не найдены</div>`;
+      return `
+        <div class="podcast-list-status">
+          ${
+            currentQuery
+              ? `По запросу "${currentQuery}" ничего не найдено`
+              : 'Подкасты не найдены'
+          }
+        </div>
+      `;
     }
-    return `
-      <div class="podcast-list"></div>
-    `;
+    return `<div class="podcast-list"></div>`;
   }
 
   afterRender(): void {

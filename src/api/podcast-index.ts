@@ -4,31 +4,42 @@ import type { Podcast, Episode } from '../types/types.ts';
 
 const BASE_URL = 'https://api.podcastindex.org/api/1.0';
 
-export async function getBasePodcasts(limit: number = 20): Promise<Podcast[]> {
+export async function getBasePodcasts(
+  limit: number = 20,
+  signal?: AbortSignal,
+): Promise<Podcast[]> {
   const headers = await getAuthHeaders();
   const response = await fetch(`${BASE_URL}/podcasts/trending?max=${limit}`, {
     headers,
+    signal,
   });
   if (!response.ok) throw new Error('Failed to fetch trending podcasts');
   const data = await response.json();
   return (data.feeds || []).map(mapFeedToPodcast);
 }
 
-export async function getSearchPodcasts(query: string): Promise<Podcast[]> {
+export async function getSearchPodcasts(
+  query: string,
+  signal?: AbortSignal,
+): Promise<Podcast[]> {
   const headers = await getAuthHeaders();
   const response = await fetch(
     `${BASE_URL}/search/byterm?q=${encodeURIComponent(query)}`,
-    { headers },
+    { headers, signal },
   );
   if (!response.ok) throw new Error('Search request failed');
   const data = await response.json();
   return (data.feeds || []).map(mapFeedToPodcast);
 }
 
-export async function getEpisodesByFeedId(feedId: string): Promise<Episode[]> {
+export async function getEpisodesByFeedId(
+  feedId: string,
+  signal?: AbortSignal,
+): Promise<Episode[]> {
   const headers = await getAuthHeaders();
   const response = await fetch(`${BASE_URL}/episodes/byfeedid?id=${feedId}`, {
     headers,
+    signal,
   });
   if (!response.ok) throw new Error('Failed to fetch episodes');
   const data = await response.json();
