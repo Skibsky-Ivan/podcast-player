@@ -58,7 +58,7 @@ export class PadcastList extends Component {
     this.abortController = new AbortController();
 
     try {
-      this.setState({ isLoading: true, currentQuety: query });
+      this.setState({ isLoading: true, currentQuery: query });
 
       const signal = this.abortController.signal;
       const podcasts = query

@@ -21,10 +21,11 @@ export async function getBasePodcasts(
 export async function getSearchPodcasts(
   query: string,
   signal?: AbortSignal,
+  limit: number = 20,
 ): Promise<Podcast[]> {
   const headers = await getAuthHeaders();
   const response = await fetch(
-    `${BASE_URL}/search/byterm?q=${encodeURIComponent(query)}`,
+    `${BASE_URL}/search/byterm?q=${encodeURIComponent(query)}&max=${limit}`,
     { headers, signal },
   );
   if (!response.ok) throw new Error('Search request failed');

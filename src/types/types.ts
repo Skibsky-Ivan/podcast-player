@@ -3,7 +3,7 @@ export interface Podcast {
   title: string;
   author: string;
   coverUrl: string;
-  numberEpisode: string;
+  episodeCount: string;
 }
 
 export interface Episode {
