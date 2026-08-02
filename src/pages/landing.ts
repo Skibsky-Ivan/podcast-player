@@ -26,10 +26,14 @@ export class LandingPage extends Component {
     if (!searchSlot) throw new Error('нету #search-slot');
     if (!podcastListSlot) throw new Error('нету #podcast-list-slot');
 
-    const searchSection = new SearchSection();
-    searchSection.mount(searchSlot);
-
     const podcastList = new PadcastList();
     podcastList.mount(podcastListSlot);
+
+    const searchSection = new SearchSection({
+      onSearch: (query: string) => {
+        podcastList.fetchPodcasts(query);
+      },
+    });
+    searchSection.mount(searchSlot);
   }
 }
