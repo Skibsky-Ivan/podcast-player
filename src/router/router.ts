@@ -1,14 +1,20 @@
 import { Component } from '../core/component.ts';
 
-type ComponentConstructor = new () => Component;
+type ComponentConstructor = new (props?: any) => Component;
 
 interface LayoutRule {
   prefix: string;
   layoutClass: ComponentConstructor;
 }
 
+interface RouterRule {
+  regex: RegExp;
+  paramNames: string[] | null;
+  pageClass: ComponentConstructor;
+}
+
 export class HashRouter {
-  private routes: Record<string, ComponentConstructor> = {};
+  private routes: RouterRule[] = [];
   private layouts: LayoutRule[] = [];
   private rootElement: HTMLElement;
 
@@ -41,7 +47,13 @@ export class HashRouter {
   }
 
   public addRoute(hash: string, pageClass: ComponentConstructor): void {
-    this.routes[hash] = pageClass;
+    const paramNames: string[] = [];
+    const regexStr = hash.replace(/:(\w+)/g, (_, name) => {
+      paramNames.push(name);
+      return `([^/]+)`;
+    });
+    const regex = new RegExp(`^${regexStr}$`);
+    this.routes.push({ regex, paramNames, pageClass });
   }
 
   public addLayout(prefix: string, layoutClass: ComponentConstructor): void {
@@ -51,8 +63,22 @@ export class HashRouter {
 
   private handleRoute(): void {
     const hash = window.location.hash.slice(1) || '/';
+    const params: Record<string, any> = {};
+    let PageClass: ComponentConstructor | null = null;
 
-    const PageClass = this.routes[hash] || this.routes['/404'];
+    for (const route of this.routes) {
+      const match = hash.match(route.regex);
+
+      if (match) {
+        PageClass = route.pageClass;
+
+        route.paramNames?.forEach((name, i) => {
+          params[name] = match[i + 1];
+        });
+        break;
+      }
+    }
+
     if (!PageClass) {
       throw new Error(
         `Не найден pageClass для маршрута "${hash}" и не зарегистрирован /404`,
@@ -92,7 +118,7 @@ export class HashRouter {
       throw new Error('Элемент #outlet не найден в макете (Layout)');
     }
 
-    this.currPage = new PageClass();
+    this.currPage = new PageClass(params);
     this.currPage.mount(outlet);
   }
 
