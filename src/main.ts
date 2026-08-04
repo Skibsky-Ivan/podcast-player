@@ -1,4 +1,4 @@
-import { HashRouter } from './router/router.ts';
+import { HashRouter } from './core/router.ts';
 import { MainLayout } from './layout/main-layout.ts';
 import { LandingPage } from './pages/landing.ts';
 

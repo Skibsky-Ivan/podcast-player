@@ -1,4 +1,4 @@
-import { Component } from '../core/component.ts';
+import { Component } from './component.ts';
 
 type ComponentConstructor = new (props?: any) => Component;
 
