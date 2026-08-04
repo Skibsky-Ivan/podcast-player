@@ -7,7 +7,7 @@ export function mapFeedToPodcast(feed: any): Podcast {
     title: feed.title || 'Без названия',
     author: feed.author || feed.ownerName || 'Неизвестен',
     coverUrl: feed.artwork || feed.image || '',
-    numberEpisode: String(feed.episodeCount || 0),
+    episodeCount: String(feed.episodeCount || 0),
   };
 }
 

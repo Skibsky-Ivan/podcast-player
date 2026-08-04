@@ -30,8 +30,8 @@ class State {
     this.notify();
   }
 
-  public getPodcastById(id: number): Podcast | undefined {
-    return this.state.podcasts.find((p) => p.id === id);
+  public getPodcastById(id: string): Podcast | undefined {
+    return this.state.podcasts.find((p) => String(p.id) === id);
   }
 
   public subscribe(listener: Listiner): () => void {
