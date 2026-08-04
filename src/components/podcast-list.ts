@@ -1,7 +1,9 @@
 import { Component } from '../core/component';
 import { PodcastCard } from './podcast-card';
 import { getBasePodcasts, getSearchPodcasts } from '../api/podcast-index';
-import { Podcast } from '../types/types';
+import { store } from '../core/state';
+import { router } from '../core/router';
+import type { Podcast } from '../types/types';
 
 interface PodcastListState {
   podcasts: Podcast[];
@@ -33,13 +35,13 @@ export class PadcastList extends Component {
 
     this.element.addEventListener('click', (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      const clickCard = target.closest<HTMLElement>('.card');
+      const podcast = target.closest<HTMLElement>('.card');
 
-      if (!(clickCard && clickCard.dataset.id)) return;
+      if (!(podcast && podcast.dataset.id)) return;
 
-      const clickCardId = clickCard.dataset.id;
+      const podcastId = podcast.dataset.id;
 
-      console.log(`Клик по карточке с ID: ${clickCardId}`);
+      router.navigate(`/details/${podcastId}`);
     });
 
     this.element.addEventListener('click', (e) => {
@@ -66,6 +68,7 @@ export class PadcastList extends Component {
         : await getBasePodcasts(20, signal);
 
       this.setState({ podcasts, isLoading: false });
+      store.setState({ podcasts });
     } catch (error) {
       if (error instanceof Error && error.name === 'AbortError') return;
 
