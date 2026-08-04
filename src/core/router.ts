@@ -13,7 +13,7 @@ interface RouterRule {
   pageClass: ComponentConstructor;
 }
 
-export class HashRouter {
+class HashRouter {
   private routes: RouterRule[] = [];
   private layouts: LayoutRule[] = [];
   private rootElement: HTMLElement;
@@ -126,3 +126,5 @@ export class HashRouter {
     window.location.hash = hash;
   }
 }
+
+export const router = new HashRouter('app');
