@@ -1,6 +1,7 @@
 import { Component } from './component.ts';
 
 type ComponentConstructor = new (props?: any) => Component;
+type RouterChangeListiner = (path: string, param: Record<string, any>) => void;
 
 interface LayoutRule {
   prefix: string;
@@ -17,6 +18,7 @@ class HashRouter {
   private routes: RouterRule[] = [];
   private layouts: LayoutRule[] = [];
   private rootElement: HTMLElement;
+  private listeners: RouterChangeListiner[] = [];
 
   private currLayout: Component | null = null;
   private currPage: Component | null = null;
@@ -120,6 +122,18 @@ class HashRouter {
 
     this.currPage = new PageClass(params);
     this.currPage.mount(outlet);
+
+    this.listeners.forEach((l) => l(hash, params));
+  }
+
+  public onRouterChange(listiner: RouterChangeListiner) {
+    this.listeners.push(listiner);
+
+    const hash = window.location.hash.slice(1) || '';
+    listiner(hash, {});
+    return () => {
+      this.listeners = this.listeners.filter((l) => l !== listiner);
+    };
   }
 
   public navigate(hash: string): void {
