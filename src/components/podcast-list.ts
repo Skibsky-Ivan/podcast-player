@@ -12,7 +12,7 @@ interface PodcastListState {
   currentQuery: string;
 }
 
-export class PadcastList extends Component {
+export class PodcastList extends Component {
   declare state: PodcastListState;
   private abortController: AbortController | null = null;
 
@@ -24,7 +24,7 @@ export class PadcastList extends Component {
 
     this.state = {
       podcasts: [],
-      isLoading: false,
+      isLoading: true,
       error: null,
       currentQuery: '',
     };
@@ -41,6 +41,8 @@ export class PadcastList extends Component {
 
       const podcastId = podcast.dataset.id;
 
+      const currPodcast = store.getPodcastById(podcastId);
+      store.setState({ currPodcast: currPodcast });
       router.navigate(`/details/${podcastId}`);
     });
 
@@ -64,7 +66,7 @@ export class PadcastList extends Component {
 
       const signal = this.abortController.signal;
       const podcasts = query
-        ? await getSearchPodcasts(query, signal)
+        ? await getSearchPodcasts(query, 20, signal)
         : await getBasePodcasts(20, signal);
 
       this.setState({ podcasts, isLoading: false });
@@ -113,12 +115,12 @@ export class PadcastList extends Component {
   }
 
   afterRender(): void {
-    const conatiner = this.element.querySelector<HTMLElement>('.podcast-list');
-    if (!conatiner) return;
+    const container = this.element.querySelector<HTMLElement>('.podcast-list');
+    if (!container) return;
 
     this.state.podcasts.forEach((podcast) => {
       const card = new PodcastCard(podcast);
-      card.mount(conatiner);
+      card.mount(container);
     });
   }
 }

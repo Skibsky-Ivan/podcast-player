@@ -1,5 +1,9 @@
 import { Component } from '../core/component';
+import { Episode } from '../types/types';
 
+interface EpisodeListProp {
+  episodes: Episode[],
+}
 export class EpisodeList extends Component {
   constructor() {
     super({

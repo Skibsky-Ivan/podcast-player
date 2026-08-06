@@ -11,4 +11,5 @@ export interface Episode {
   title: string;
   author: string;
   duration: string;
+  audioUrl: string;
 }

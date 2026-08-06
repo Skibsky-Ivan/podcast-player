@@ -17,5 +17,6 @@ export function mapItemToEpisode(item: any): Episode {
     title: item.title || 'Без названия',
     author: item.feedAuthor || item.author || 'Неизвестен',
     duration: formatDuration(item.duration),
+    audioUrl: item.enclosureUrl || ''
   };
 }
