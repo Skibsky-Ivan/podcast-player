@@ -1,11 +1,34 @@
 import { Component, ComponentProps } from '../core/component.ts';
+import { router } from '../core/router.ts';
 
 export class Header extends Component {
+  private unsubscribe: (() => void) | null = null;
+
   constructor(props: ComponentProps = {}) {
     super({
       tagName: 'header',
       className: 'header container',
       props,
+    });
+  }
+
+  onMount(): void {
+    this.unsubscribe = router.onRouterChange((path) => {
+      this.updateActiveClass(path);
+    });
+  }
+
+  onUnmount(): void {
+    this.unsubscribe?.();
+  }
+
+  private updateActiveClass(currPath: string): void {
+    const links = document.querySelectorAll<HTMLElement>('.nav-link');
+
+    links.forEach((link) => {
+      const href = link.getAttribute('href') || '';
+      const isActive = (currPath === href) || currPath.startsWith(`${href}/`);
+      link.classList.toggle('active', isActive);
     });
   }
 
