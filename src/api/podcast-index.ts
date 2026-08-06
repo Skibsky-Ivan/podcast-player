@@ -20,8 +20,8 @@ export async function getBasePodcasts(
 
 export async function getSearchPodcasts(
   query: string,
-  signal?: AbortSignal,
   limit: number = 20,
+  signal?: AbortSignal,
 ): Promise<Podcast[]> {
   const headers = await getAuthHeaders();
   const response = await fetch(
@@ -33,15 +33,33 @@ export async function getSearchPodcasts(
   return (data.feeds || []).map(mapFeedToPodcast);
 }
 
-export async function getEpisodesByFeedId(
+export async function getPodcastById(
   feedId: string,
   signal?: AbortSignal,
-): Promise<Episode[]> {
+): Promise<Podcast> {
   const headers = await getAuthHeaders();
-  const response = await fetch(`${BASE_URL}/episodes/byfeedid?id=${feedId}`, {
+  const response = await fetch(`${BASE_URL}/podcasts/byfeedid?id=${feedId}`, {
     headers,
     signal,
   });
+  if (!response.ok) throw new Error('Failed to fetch podcast details');
+  const data = await response.json();
+  return mapFeedToPodcast(data.feed);
+}
+
+export async function getEpisodesByFeedId(
+  feedId: string,
+  limit: number = 50,
+  signal?: AbortSignal,
+): Promise<Episode[]> {
+  const headers = await getAuthHeaders();
+  const response = await fetch(
+    `${BASE_URL}/episodes/byfeedid?id=${feedId}&max=${limit}`,
+    {
+      headers,
+      signal,
+    },
+  );
   if (!response.ok) throw new Error('Failed to fetch episodes');
   const data = await response.json();
   return (data.items || []).map(mapItemToEpisode);
