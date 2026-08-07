@@ -11,10 +11,16 @@ export function mapFeedToPodcast(podcast: any): Podcast {
 }
 
 export function mapItemToEpisode(episode: any): Episode {
+  const durationSec = Number(episode?.duration) || null;
+
   return {
     id: String(episode?.id ?? ''),
     title: episode?.title || 'Без названия',
-    duration: formatDuration(episode?.duration),
+    duration: formatDuration(durationSec),
+    durationSec,
+    pubDate: episode?.datePublished
+      ? new Date(episode.datePublished * 1000).toLocaleDateString('ru-RU')
+      : '—',
     audioUrl: episode?.enclosureUrl || '',
     coverUrl: episode?.image || episode?.feedImage || '',
   };
