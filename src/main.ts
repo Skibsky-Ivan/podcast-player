@@ -8,6 +8,6 @@ router.addLayout('/', MainLayout);
 
 router.addRoute('/', LandingPage);
 
-router.addRoute('/details/:id', DetailsPage);
+router.addRoute('/details/:feedId', DetailsPage);
 
 router.addRoute('/playlist', PlaylistPage);
