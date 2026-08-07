@@ -15,6 +15,7 @@ interface PodcastListState {
 export class PodcastList extends Component {
   declare state: PodcastListState;
   private abortController: AbortController | null = null;
+  private cards: PodcastCard[] = [];
 
   constructor() {
     super({
@@ -54,6 +55,12 @@ export class PodcastList extends Component {
 
       this.fetchPodcasts();
     });
+  }
+
+  onUnmount(): void {
+    this.cards.forEach((c) => c.unmount());
+    this.cards = [];
+    this.abortController?.abort();
   }
 
   public async fetchPodcasts(query?: string) {
@@ -118,9 +125,13 @@ export class PodcastList extends Component {
     const container = this.element.querySelector<HTMLElement>('.podcast-list');
     if (!container) return;
 
+    this.cards.forEach((c) => c.unmount());
+    this.cards = [];
+
     this.state.podcasts.forEach((podcast) => {
       const card = new PodcastCard(podcast);
       card.mount(container);
+      this.cards.push(card);
     });
   }
 }

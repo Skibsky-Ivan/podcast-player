@@ -2,6 +2,7 @@ import { Component } from '../core/component';
 import { Episode } from '../types/types';
 import { getEpisodesByFeedId } from '../api/podcast-index';
 import { EpisodeRow } from './episode-row';
+import { store } from '../core/state';
 
 interface EpisodeListState {
   episodes: Episode[];
@@ -9,13 +10,14 @@ interface EpisodeListState {
   error: string | null;
 }
 
-interface EposodeListProps {
+interface EpisodeListProps {
   feedId: string;
 }
 export class EpisodeList extends Component {
-  declare props: EposodeListProps;
+  declare props: EpisodeListProps;
   declare state: EpisodeListState;
   private abortController: AbortController | null = null;
+  private rows: EpisodeRow[] = [];
 
   constructor(feedId: string) {
     super({
@@ -42,6 +44,12 @@ export class EpisodeList extends Component {
 
       this.fetchEpisodes();
     });
+  }
+
+  onUnmount(): void {
+    this.rows.forEach((r) => r.unmount());
+    this.rows = [];
+    this.abortController?.abort();
   }
 
   public async fetchEpisodes(): Promise<void> {
@@ -128,9 +136,20 @@ export class EpisodeList extends Component {
       this.element.querySelector<HTMLElement>('.tracklist-body');
     if (!container) return;
 
+    this.rows.forEach((r) => r.unmount());
+    this.rows = [];
+
+    const currPodcast = store.getState().currPodcast;
+
     this.state.episodes.forEach((episode, index) => {
-      const row = new EpisodeRow(episode, index);
+      const row = new EpisodeRow({
+        episode,
+        index,
+        podcastCoverUrl: currPodcast?.coverUrl || '',
+        author: currPodcast?.author || '',
+      });
       row.mount(container);
+      this.rows.push(row);
     });
   }
 }
