@@ -11,3 +11,5 @@ router.addRoute('/', LandingPage);
 router.addRoute('/details/:feedId', DetailsPage);
 
 router.addRoute('/playlist', PlaylistPage);
+
+router.navigate('/');

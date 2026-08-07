@@ -4,11 +4,10 @@ import { router } from '../core/router.ts';
 export class Header extends Component {
   private unsubscribe: (() => void) | null = null;
 
-  constructor(props: ComponentProps = {}) {
+  constructor() {
     super({
       tagName: 'header',
       className: 'header container',
-      props,
     });
   }
 
@@ -23,7 +22,7 @@ export class Header extends Component {
   }
 
   private updateActiveClass(currPath: string): void {
-    const links = document.querySelectorAll<HTMLElement>('.nav-link');
+    const links = this.element.querySelectorAll<HTMLElement>('.nav-link');
 
     links.forEach((link) => {
       const href = link.getAttribute('href') || '';
@@ -39,7 +38,7 @@ export class Header extends Component {
         <span class="logo-text">AudioWave</span>
       </a>
       <nav class="nav">
-        <a href="/" class="nav-link active" data-link>
+        <a href="/" class="nav-link" data-link>
           <span class="icon icon-home"></span>
           <span>Home</span>
         </a>

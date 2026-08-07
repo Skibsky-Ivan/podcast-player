@@ -1,24 +1,26 @@
 import { Component } from '../core/component';
 import type { Episode } from '../types/types';
-import { store } from '../core/state';
 
+interface EpisodeRowProps {
+  episode: Episode;
+  index: number;
+  author: string;
+  podcastCoverUrl: string;
+}
 export class EpisodeRow extends Component {
-  declare props: {
-    episode: Episode;
-    index: number;
-  };
+  declare props: EpisodeRowProps;
 
-  constructor(episode: Episode, index: number) {
+  constructor(props: EpisodeRowProps) {
     super({
       tagName: 'article',
       className: 'track-row',
-      props: { episode, index },
+      props,
     });
   }
 
   render(): string {
-    const { episode, index } = this.props;
-    const author = store.getState().currPodcast?.author;
+    const { episode, index, author, podcastCoverUrl } = this.props;
+    const coverUrl = episode.coverUrl || podcastCoverUrl;
 
     return `
       <div class="track-num">
@@ -26,12 +28,14 @@ export class EpisodeRow extends Component {
         <span class="icon icon-play num-play"></span>
       </div>
       <div class="track-info">
-        <h2 class="track-title">
-          ${episode.title || 'Без названия'}
-        </h2>
-        <p class="track-author">${author || ''}</p>
+        <img class="track-cover" src="${coverUrl}" alt="" loading="lazy" />
+        <div class="track-text">
+          <h2 class="track-title">${episode.title || 'Без названия'}</h2>
+          <p class="track-author">${author || ''}</p>
+        </div>
       </div>
       <div class="track-meta">
+        <span class="track-date">${episode.pubDate}</span>
         <button class="track-add-btn" title="Добавить">
           <span class="icon icon-plus"></span>
         </button>
