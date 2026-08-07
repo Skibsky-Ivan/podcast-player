@@ -1,22 +1,21 @@
 import { Podcast, Episode } from '../types/types.ts';
 import { formatDuration } from '../utils/format-time.ts';
 
-export function mapFeedToPodcast(feed: any): Podcast {
+export function mapFeedToPodcast(podcast: any): Podcast {
   return {
-    id: String(feed.id),
-    title: feed.title || 'Без названия',
-    author: feed.author || feed.ownerName || 'Неизвестен',
-    coverUrl: feed.artwork || feed.image || '',
-    episodeCount: String(feed.episodeCount || 0),
+    id: String(podcast?.id ?? ''),
+    title: podcast?.title || 'Без названия',
+    author: podcast?.author || 'Неизвестен',
+    coverUrl: podcast?.artwork || podcast?.image || '',
   };
 }
 
-export function mapItemToEpisode(item: any): Episode {
+export function mapItemToEpisode(episode: any): Episode {
   return {
-    id: String(item.id),
-    title: item.title || 'Без названия',
-    author: item.feedAuthor || item.author || 'Неизвестен',
-    duration: formatDuration(item.duration),
-    audioUrl: item.enclosureUrl || ''
+    id: String(episode?.id ?? ''),
+    title: episode?.title || 'Без названия',
+    duration: formatDuration(episode?.duration),
+    audioUrl: episode?.enclosureUrl || '',
+    coverUrl: episode?.image || episode?.feedImage || '',
   };
 }
