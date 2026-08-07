@@ -1,5 +1,6 @@
 import { Component } from '../core/component';
 import type { Episode } from '../types/types';
+import { store } from '../core/state';
 
 export class EpisodeRow extends Component {
   declare props: {
@@ -17,6 +18,7 @@ export class EpisodeRow extends Component {
 
   render(): string {
     const { episode, index } = this.props;
+    const author = store.getState().currPodcast?.author;
 
     return `
       <div class="track-num">
@@ -27,7 +29,7 @@ export class EpisodeRow extends Component {
         <h2 class="track-title">
           ${episode.title || 'Без названия'}
         </h2>
-        <p class="track-author">${episode.author || ''}</p>
+        <p class="track-author">${author || ''}</p>
       </div>
       <div class="track-meta">
         <button class="track-add-btn" title="Добавить">

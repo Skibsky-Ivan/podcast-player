@@ -30,8 +30,6 @@ export class PodcastHero extends Component {
           </h1>
           <div class="podcast-meta-author">
             ${podcast.author ? `<span class="author-name">${podcast.author}</span>` : ''}
-            ${podcast.author && podcast.episodeCount ? `<span class="meta-dot"></span>` : ''}
-            ${podcast.episodeCount ? `<span>${podcast.episodeCount} треков</span>` : ''}
           </div>
         </div>
       </div>

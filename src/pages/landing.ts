@@ -1,6 +1,6 @@
 import { Component, ComponentProps } from '../core/component.ts';
 import { SearchSection } from '../components/search-section.ts';
-import { PadcastList } from '../components/podcast-list.ts';
+import { PodcastList } from '../components/podcast-list.ts';
 
 export class LandingPage extends Component {
   constructor(props: ComponentProps = {}) {
@@ -26,7 +26,7 @@ export class LandingPage extends Component {
     if (!searchSlot) throw new Error('нету #search-slot');
     if (!podcastListSlot) throw new Error('нету #podcast-list-slot');
 
-    const podcastList = new PadcastList();
+    const podcastList = new PodcastList();
     podcastList.mount(podcastListSlot);
 
     const searchSection = new SearchSection({
