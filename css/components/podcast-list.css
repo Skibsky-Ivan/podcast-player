@@ -1,4 +1,4 @@
-.podcast-grid {
+.podcast-list {
   display: grid;
   grid-template-columns: repeat(
     auto-fill,

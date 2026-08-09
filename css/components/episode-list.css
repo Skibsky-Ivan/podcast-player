@@ -3,21 +3,30 @@
 }
 
 .tracklist-header {
-  display: grid;
-  grid-template-columns: 3rem 1fr auto;
+  display: flex;
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 2.1rem;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
 }
 
 .header-num {
   text-align: center;
+  margin-right: 2.5rem;
+}
+
+.header-title {
+  max-width: 49.5rem;
+  flex-grow: 1; 
+  min-width: 10rem;
+}
+
+.header-data {
+  margin-right: 5.5rem;
 }
 
 .header-time {
-  padding-right: 1rem;
   display: flex;
   justify-content: flex-end;
 }

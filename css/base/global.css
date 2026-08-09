@@ -68,10 +68,6 @@ body {
   -webkit-mask-image: url('../../svg/plus.svg');
   mask-image: url('../../svg/plus.svg');
 }
-.icon-shuffle {
-  -webkit-mask-image: url('../../svg/shuffle.svg');
-  mask-image: url('../../svg/shuffle.svg');
-}
 .icon-speed {
   -webkit-mask-image: url('../../svg/speed.svg');
   mask-image: url('../../svg/speed.svg');
@@ -85,6 +81,10 @@ body {
   mask-image: url('../../svg/clock.svg');
 }
 .icon-check-mark {
-    -webkit-mask-image: url('../../svg/check-mark.svg');
-    mask-image: url('../../svg/check-mark.svg');
+  -webkit-mask-image: url('../../svg/check-mark.svg');
+  mask-image: url('../../svg/check-mark.svg');
+}
+.icon-arrow-left {
+  -webkit-mask-image: url('../../svg/arrow-left.svg');
+  mask-image: url('../../svg/arrow-left.svg');
 }

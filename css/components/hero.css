@@ -24,12 +24,13 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: linear-gradient(135deg, #3e9db8, #0e3a76);
 }
 
-.cover-placeholder-text {
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 700;
-  font-size: 1rem;
+.hero-img {
+  display: block;
+  width: 100%;
+  border-radius: 12px;
 }
 
 .hero-details {
@@ -55,7 +56,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 1rem;
   font-size: clamp(0.8rem, 1.1vw, 0.95rem);
   color: rgba(255, 255, 255, 0.85);
   margin-top: 0.4rem;
@@ -70,8 +71,4 @@
 .author-name {
   font-weight: 700;
   color: #ffffff;
-}
-
-.meta-dot {
-  opacity: 0.6;
 }

@@ -1,6 +1,7 @@
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.75rem;
   padding: 1rem;
   border-radius: 12px;
@@ -15,7 +16,13 @@
   background-color: var(--bg-surface);
 }
 
+.card-cover-wrapper {
+  background: linear-gradient(180deg, #001c51, #513a94);
+  border-radius: 10px;
+}
+
 .card-img {
+  display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
@@ -35,4 +42,7 @@
   margin: 0;
   font-size: clamp(0.8rem, 1.2vw, 0.9rem);
   color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

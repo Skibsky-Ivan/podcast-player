@@ -44,10 +44,6 @@
   transition: border-color 0.2s ease;
 }
 
-.search-input:hover {
-  border-color: var(--border-color);
-}
-
 .search-input:focus {
   border-color: var(--accent);
 }
