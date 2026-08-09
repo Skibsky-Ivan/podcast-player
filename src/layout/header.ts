@@ -1,4 +1,4 @@
-import { Component, ComponentProps } from '../core/component.ts';
+import { Component } from '../core/component.ts';
 import { router } from '../core/router.ts';
 
 export class Header extends Component {

@@ -19,7 +19,7 @@ export class PodcastCard extends Component {
         <img 
           class="card-img" 
           src="${podcast.coverUrl || ''}" 
-          alt="${podcast.title || 'Podcast Cover'}" 
+          alt="" 
           loading="lazy" 
         />
       </div>

@@ -32,8 +32,6 @@ export class PodcastList extends Component {
   }
 
   onMount(): void {
-    this.fetchPodcasts();
-
     this.element.addEventListener('click', (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       const podcast = target.closest<HTMLElement>('.card');

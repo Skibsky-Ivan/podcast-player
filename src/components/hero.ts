@@ -21,7 +21,7 @@ export class PodcastHero extends Component {
           <img 
             class="hero-img" 
             src="${podcast.coverUrl || ''}" 
-            alt="${podcast.title || 'Podcast Cover'}" 
+            alt="" 
           />
         </div>
         <div class="hero-details">
