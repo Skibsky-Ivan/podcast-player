@@ -3,6 +3,7 @@ import { MainLayout } from './layout/main-layout.ts';
 import { DetailsPage } from './pages/details.ts';
 import { PlaylistPage } from './pages/playlist.ts';
 import { LandingPage } from './pages/landing.ts';
+import { NotFoundPage } from './pages/not-found.ts';
 
 router.addLayout('/', MainLayout);
 
@@ -12,4 +13,4 @@ router.addRoute('/details/:feedId', DetailsPage);
 
 router.addRoute('/playlist', PlaylistPage);
 
-router.navigate('/');
+router.setNotFound(NotFoundPage);

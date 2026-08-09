@@ -23,6 +23,7 @@ class HashRouter {
   private currLayout: Component | null = null;
   private currPage: Component | null = null;
   private currLayoutClass: ComponentConstructor | null = null;
+  private notFoundClass: ComponentConstructor | null = null;
 
   constructor(rootElementId: string) {
     const element = document.getElementById(rootElementId);
@@ -63,6 +64,10 @@ class HashRouter {
     this.layouts.sort((a, b) => b.prefix.length - a.prefix.length);
   }
 
+  public setNotFound(pageClass: ComponentConstructor): void {
+    this.notFoundClass = pageClass;
+  }
+
   private handleRoute(): void {
     const hash = window.location.hash.slice(1) || '/';
     const params: Record<string, any> = {};
@@ -82,9 +87,12 @@ class HashRouter {
     }
 
     if (!PageClass) {
-      throw new Error(
-        `Не найден pageClass для маршрута "${hash}" и не зарегистрирован /404`,
-      );
+      PageClass = this.notFoundClass;
+      if (!PageClass) {
+        throw new Error(
+          `Не найден pageClass для маршрута "${hash}" и не зарегистрирован 404`,
+        );
+      }
     }
 
     const matchedLayout = this.layouts.find((rule) =>
