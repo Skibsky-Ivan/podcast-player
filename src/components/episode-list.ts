@@ -78,6 +78,7 @@ export class EpisodeList extends Component {
       <div class="tracklist-header">
         <span class="header-num">#</span>
         <span class="header-title">Название</span>
+        <span class="header-data">Опубликовано</span>
         <span class="header-time">
           <span class="icon icon-clock"></span>
         </span>
@@ -140,13 +141,17 @@ export class EpisodeList extends Component {
     this.rows = [];
 
     const currPodcast = store.getState().currPodcast;
+    const podcastAuthor = currPodcast?.author || '';
+    const podcastTitle = currPodcast?.title || '';
+    const podcastCoverUrl = currPodcast?.coverUrl || '';
 
     this.state.episodes.forEach((episode, index) => {
       const row = new EpisodeRow({
         episode,
+        podcastAuthor,
+        podcastTitle,
+        podcastCoverUrl,
         index,
-        podcastCoverUrl: currPodcast?.coverUrl || '',
-        author: currPodcast?.author || '',
       });
       row.mount(container);
       this.rows.push(row);
