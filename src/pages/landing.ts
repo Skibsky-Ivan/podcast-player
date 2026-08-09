@@ -22,10 +22,14 @@ export class LandingPage extends Component {
   }
 
   afterRender(): void {
-    const searchSlot = this.element.querySelector<HTMLElement>('#search-slot');
     const podcastListSlot =
       this.element.querySelector<HTMLElement>('#podcast-list-slot');
+    if (podcastListSlot) {
+      this.podcastList = new PodcastList();
+      this.podcastList.mount(podcastListSlot);
+    }
 
+    const searchSlot = this.element.querySelector<HTMLElement>('#search-slot');
     if (searchSlot) {
       this.searchSection = new SearchSection({
         onSearch: (query: string) => {
@@ -34,15 +38,12 @@ export class LandingPage extends Component {
       });
       this.searchSection.mount(searchSlot);
     }
-
-    if (podcastListSlot) {
-      this.podcastList = new PodcastList();
-      this.podcastList.mount(podcastListSlot);
-    }
   }
 
   onUnmount(): void {
     this.podcastList?.unmount();
+    this.podcastList = null;
     this.searchSection?.unmount();
+    this.searchSection = null;
   }
 }
