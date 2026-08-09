@@ -1,7 +1,6 @@
 import { Component } from '../core/component.ts';
 import { PodcastHero } from '../components/hero.ts';
 import { EpisodeList } from '../components/episode-list.ts';
-import { ControlsBar } from '../components/controls-bar.ts';
 import { store } from '../core/state.ts';
 import { getPodcastById } from '../api/podcast-index.ts';
 import type { Podcast } from '../types/types.ts';
@@ -10,7 +9,6 @@ export class DetailsPage extends Component {
   declare props: { feedId: string };
   private hero: PodcastHero | null = null;
   private episodeList: EpisodeList | null = null;
-  private controlsBar: ControlsBar | null = null;
 
   constructor(props: { feedId: string }) {
     super({
@@ -40,25 +38,19 @@ export class DetailsPage extends Component {
 
   onUnmount(): void {
     this.hero?.unmount();
+    this.hero = null;
     this.episodeList?.unmount();
-    this.controlsBar?.unmount();
+    this.episodeList = null;
   }
 
   mountComponents(podcast: Podcast): void {
     const hero = this.element.querySelector<HTMLElement>('#hero-slot');
-    const controlsBar =
-      this.element.querySelector<HTMLElement>('#controls-bar-slot');
     const episodeList =
       this.element.querySelector<HTMLElement>('#episode-list-slot');
 
     if (hero) {
       this.hero = new PodcastHero(podcast);
       this.hero.mount(hero);
-    }
-
-    if (controlsBar) {
-      this.controlsBar = new ControlsBar();
-      this.controlsBar.mount(controlsBar);
     }
 
     if (episodeList) {
@@ -78,7 +70,6 @@ export class DetailsPage extends Component {
     return `
       <div id="hero-slot"></div>
       <div class="container">
-        <div id="controls-bar-slot"></div>
         <div id="episode-list-slot"></div>
       </div>
     `;
