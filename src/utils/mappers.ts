@@ -23,5 +23,6 @@ export function mapItemToEpisode(episode: any): Episode {
       : '—',
     audioUrl: episode?.enclosureUrl || '',
     coverUrl: episode?.image || episode?.feedImage || '',
+    podcastId: String(episode?.feedId ?? ''),
   };
 }
