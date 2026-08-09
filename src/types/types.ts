@@ -13,11 +13,13 @@ export interface Episode {
   pubDate: string;
   audioUrl: string;
   coverUrl: string;
+  podcastId: string;
 }
 
 export interface PlaylistItem {
   episode: Episode;
-  podcastId: string;
   podcastTitle: string;
+  podcastAuthor: string;
   podcastCoverUrl: string;
+  addedAt: number;
 }
