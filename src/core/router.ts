@@ -15,6 +15,8 @@ interface RouterRule {
   pageClass: ComponentConstructor;
 }
 
+const BASE = '/podcast-player';
+
 class HistoryRouter {
   private routes: RouterRule[] = [];
   private layouts: LayoutRule[] = [];
@@ -148,7 +150,12 @@ class HistoryRouter {
   }
 
   private handleRoute(): void {
-    const path = window.location.pathname;
+    let path = window.location.pathname;
+
+    if (path.startsWith(BASE)) {
+      path = path.slice(BASE.length) || '/';
+    }
+
     const { PageClass, params } = this.resolvePageClass(path);
     const TargetLayoutClass = this.resolveLayout(path);
 
@@ -169,11 +176,13 @@ class HistoryRouter {
   }
 
   public navigate(path: string): void {
+    const fullPath = BASE + path.slice(1);
     const current =
       window.location.pathname + window.location.search + window.location.hash;
-    if (current === path) return;
 
-    window.history.pushState({}, '', path);
+    if (current === fullPath) return;
+
+    window.history.pushState({}, '', fullPath);
     this.handleRoute();
   }
 }
