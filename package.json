@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/Skibsky-Ivan/podcast-player#readme",
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "vite": "^8.1.5"
   }
 }
