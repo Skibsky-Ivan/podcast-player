@@ -1,7 +1,7 @@
 import { Component } from './component.ts';
 
 type ComponentConstructor = new (props?: any) => Component;
-type RouterChangeListiner = (path: string, param: Record<string, any>) => void;
+type RouterChangeListener = (path: string, param: Record<string, any>) => void;
 
 interface LayoutRule {
   prefix: string;
@@ -9,21 +9,21 @@ interface LayoutRule {
 }
 
 interface RouterRule {
+  path: string;
   regex: RegExp;
   paramNames: string[] | null;
   pageClass: ComponentConstructor;
 }
 
-class HashRouter {
+class HistoryRouter {
   private routes: RouterRule[] = [];
   private layouts: LayoutRule[] = [];
   private rootElement: HTMLElement;
-  private listeners: RouterChangeListiner[] = [];
+  private listeners: RouterChangeListener[] = [];
 
   private currLayout: Component | null = null;
   private currPage: Component | null = null;
   private currLayoutClass: ComponentConstructor | null = null;
-  private notFoundClass: ComponentConstructor | null = null;
 
   constructor(rootElementId: string) {
     const element = document.getElementById(rootElementId);
@@ -33,30 +33,34 @@ class HashRouter {
 
     this.rootElement = element;
 
-    window.addEventListener('hashchange', () => this.handleRoute());
+    window.addEventListener('popstate', () => this.handleRoute());
     window.addEventListener('load', () => this.handleRoute());
 
     document.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement | null;
-      const anchor = target?.closest<HTMLAnchorElement>('a[data-link]');
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a[data-link]');
 
       if (anchor) {
-        e.preventDefault();
         const href = anchor.getAttribute('href');
         if (!href) return;
-        this.navigate(href);
+
+        const url = new URL(href, window.location.href);
+        if (url.origin !== window.location.origin) return;
+
+        e.preventDefault();
+        this.navigate(url.pathname + url.search + url.hash);
       }
     });
   }
 
-  public addRoute(hash: string, pageClass: ComponentConstructor): void {
+  public addRoute(path: string, pageClass: ComponentConstructor): void {
     const paramNames: string[] = [];
-    const regexStr = hash.replace(/:(\w+)/g, (_, name) => {
+    const regexStr = path.replace(/:(\w+)/g, (_, name) => {
       paramNames.push(name);
       return `([^/]+)`;
     });
     const regex = new RegExp(`^${regexStr}$`);
-    this.routes.push({ regex, paramNames, pageClass });
+    this.routes.push({ path, regex, paramNames, pageClass });
   }
 
   public addLayout(prefix: string, layoutClass: ComponentConstructor): void {
@@ -64,57 +68,68 @@ class HashRouter {
     this.layouts.sort((a, b) => b.prefix.length - a.prefix.length);
   }
 
-  public setNotFound(pageClass: ComponentConstructor): void {
-    this.notFoundClass = pageClass;
-  }
-
-  private handleRoute(): void {
-    const hash = window.location.hash.slice(1) || '/';
-    const params: Record<string, any> = {};
-    let PageClass: ComponentConstructor | null = null;
-
+  private matchRoute(
+    path: string,
+  ): { route: RouterRule; params: Record<string, any> } | null {
     for (const route of this.routes) {
-      const match = hash.match(route.regex);
-
+      const match = path.match(route.regex);
       if (match) {
-        PageClass = route.pageClass;
-
+        const params: Record<string, any> = {};
         route.paramNames?.forEach((name, i) => {
           params[name] = match[i + 1];
         });
-        break;
+        return { route, params };
       }
     }
+    return null;
+  }
 
-    if (!PageClass) {
-      PageClass = this.notFoundClass;
-      if (!PageClass) {
-        throw new Error(
-          `Не найден pageClass для маршрута "${hash}" и не зарегистрирован 404`,
-        );
-      }
+  private resolvePageClass(path: string): {
+    PageClass: ComponentConstructor;
+    params: Record<string, any>;
+  } {
+    const matched = this.matchRoute(path);
+
+    if (matched) {
+      return { PageClass: matched.route.pageClass, params: matched.params };
     }
 
+    const notFound = this.routes.find((r) => r.path === '/404');
+    if (notFound) {
+      return { PageClass: notFound.pageClass, params: {} };
+    }
+
+    throw new Error(
+      `Не найден pageClass для маршрута "${path}" и не зарегистрирован /404`,
+    );
+  }
+
+  private resolveLayout(path: string): ComponentConstructor {
     const matchedLayout = this.layouts.find((rule) =>
-      hash.startsWith(rule.prefix),
+      path.startsWith(rule.prefix),
     );
     if (!matchedLayout) {
-      throw new Error(`Не найден layoutClass для префикса пути "${hash}"`);
+      throw new Error(`Не найден layoutClass для префикса пути "${path}"`);
     }
+    return matchedLayout.layoutClass;
+  }
 
-    const TargetLayoutClass = matchedLayout.layoutClass;
+  private switchLayout(TargetLayoutClass: ComponentConstructor): void {
+    if (this.currLayoutClass === TargetLayoutClass) return;
 
+    this.currLayout?.unmount();
+    this.currLayout = new TargetLayoutClass();
+    this.currLayout.mount(this.rootElement);
+    this.currLayoutClass = TargetLayoutClass;
+  }
+
+  private renderPage(
+    PageClass: ComponentConstructor,
+    params: Record<string, any>,
+  ): void {
     if (this.currPage) {
       this.currPage.unmount();
       this.currPage = null;
-    }
-
-    if (this.currLayoutClass !== TargetLayoutClass) {
-      this.currLayout?.unmount();
-
-      this.currLayout = new TargetLayoutClass();
-      this.currLayout.mount(this.rootElement);
-      this.currLayoutClass = TargetLayoutClass;
     }
 
     if (!this.currLayout) {
@@ -130,23 +145,37 @@ class HashRouter {
 
     this.currPage = new PageClass(params);
     this.currPage.mount(outlet);
-
-    this.listeners.forEach((l) => l(hash, params));
   }
 
-  public onRouterChange(listiner: RouterChangeListiner) {
-    this.listeners.push(listiner);
+  private handleRoute(): void {
+    const path = window.location.pathname;
+    const { PageClass, params } = this.resolvePageClass(path);
+    const TargetLayoutClass = this.resolveLayout(path);
 
-    const hash = window.location.hash.slice(1) || '';
-    listiner(hash, {});
+    this.switchLayout(TargetLayoutClass);
+    this.renderPage(PageClass, params);
+
+    this.listeners.forEach((l) => l(path, params));
+  }
+
+  public onRouterChange(listener: RouterChangeListener) {
+    this.listeners.push(listener);
+
+    const path = window.location.pathname;
+    listener(path, {});
     return () => {
-      this.listeners = this.listeners.filter((l) => l !== listiner);
+      this.listeners = this.listeners.filter((l) => l !== listener);
     };
   }
 
-  public navigate(hash: string): void {
-    window.location.hash = hash;
+  public navigate(path: string): void {
+    const current =
+      window.location.pathname + window.location.search + window.location.hash;
+    if (current === path) return;
+
+    window.history.pushState({}, '', path);
+    this.handleRoute();
   }
 }
 
-export const router = new HashRouter('app');
+export const router = new HistoryRouter('app');

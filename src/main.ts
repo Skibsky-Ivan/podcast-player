@@ -13,4 +13,4 @@ router.addRoute('/details/:feedId', DetailsPage);
 
 router.addRoute('/playlist', PlaylistPage);
 
-router.setNotFound(NotFoundPage);
+router.addRoute('/404', NotFoundPage);
