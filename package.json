@@ -17,11 +17,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Skibsky-Ivan/podcast-player/issues"
   },
-  "homepage": "https://github.com/Skibsky-Ivan/podcast-player#readme",
+  "homepage": "https://Skibsky-Ivan.github.io/podcast-player",
   "devDependencies": {
     "gh-pages": "^6.3.0",
     "vite": "^8.1.5"
