@@ -168,7 +168,11 @@ class HistoryRouter {
   public onRouterChange(listener: RouterChangeListener) {
     this.listeners.push(listener);
 
-    const path = window.location.pathname;
+    let path = window.location.pathname;
+    if (path.startsWith(BASE)) {
+      path = path.slice(BASE.length) || '/';
+    }
+
     listener(path, {});
     return () => {
       this.listeners = this.listeners.filter((l) => l !== listener);
@@ -176,7 +180,7 @@ class HistoryRouter {
   }
 
   public navigate(path: string): void {
-    const fullPath = BASE + path.slice(1);
+    const fullPath = BASE + path;
     const current =
       window.location.pathname + window.location.search + window.location.hash;
 
