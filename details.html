@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Как изменить мышление - AudioWave</title>
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/pages/details.css" />
+  </head>
+  <body>
+    <!-- Шапка сайта -->
+    <header class="header container">
+      <a href="main.html" class="logo">
+        <span class="icon icon-audio-wave logo-icon"></span>
+        <span class="logo-text">AudioWave</span>
+      </a>
+      <nav class="nav">
+        <a href="main.html" class="nav-link">
+          <span class="icon icon-home"></span>
+          <span>Home</span>
+        </a>
+        <a href="#" class="nav-link active">
+          <span class="icon icon-playlist"></span>
+          <span>Playlist</span>
+        </a>
+      </nav>
+    </header>
+
+    <!-- Основной контент страницы -->
+    <main class="main-content">
+      <!-- Баннер подкаста (на всю ширину с внутренним контейнером) -->
+      <section class="podcast-hero">
+        <div class="container hero-container">
+          <div
+            class="hero-cover"
+            style="background: linear-gradient(135deg, #a03b5a, #621b2f)">
+            <div class="cover-placeholder-text">ОБЛОЖКА</div>
+          </div>
+          <div class="hero-details">
+            <h1 class="podcast-title">
+              Как изменить мышление, принять себя и стать счастливым.
+              Когнитивно-поведенческая терапия...
+            </h1>
+            <div class="podcast-meta-author">
+              <div class="author-avatar" style="background: #d9d9d9"></div>
+              <span class="author-name">Павел Федоренко</span>
+              <span class="meta-dot">•</span>
+              <span>162 трека, примерно 8 ч. 30 мин.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Контент подкаста: Управление и Список треков -->
+      <div class="container">
+        <!-- Панель управления (Играть, Перетасовать, Добавить) -->
+        <div class="controls-bar">
+          <button class="main-play-btn" title="Воспроизвести">
+            <span class="icon icon-play play-icon-inner"></span>
+          </button>
+
+          <button class="action-icon-btn" title="Перемешать">
+            <span class="icon icon-shuffle"></span>
+          </button>
+
+          <button class="action-icon-btn" title="Добавить">
+            <span class="icon icon-plus"></span>
+          </button>
+        </div>
+
+        <!-- Список треков -->
+        <section class="tracklist-container">
+          <!-- Шапка таблицы -->
+          <div class="tracklist-header">
+            <span class="header-num">#</span>
+            <span class="header-title">Название</span>
+            <span class="header-time">
+              <span class="icon icon-clock"></span>
+            </span>
+          </div>
+
+          <hr class="tracklist-divider" />
+
+          <!-- Тело таблицы -->
+          <div class="tracklist-body">
+            <!-- Трек 1 -->
+            <div class="track-row">
+              <div class="track-num">
+                <span class="num-text">1</span>
+                <span class="icon icon-play num-play"></span>
+              </div>
+              <div class="track-info">
+                <h4 class="track-title">
+                  Часть 1.1 - Как изменить мышление, принять себя и стать
+                  счастливым. Когнитивно-поведенческая...
+                </h4>
+                <p class="track-author">Павел Федоренко</p>
+              </div>
+              <div class="track-meta">
+                <button class="track-add-btn" title="Добавить">
+                  <span class="icon icon-plus"></span>
+                </button>
+                <span class="track-duration">3:10</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Фиксированный плеер -->
+    <aside class="player">
+      <div class="player-progress-top">
+        <div class="progress-fill"></div>
+      </div>
+
+      <div class="player-left">
+        <button class="control-btn" id="prev-btn" title="Предыдущий">
+          <span class="icon icon-previous"></span>
+        </button>
+        <button class="control-btn" id="play-btn" title="Пауза">
+          <span class="icon icon-pause"></span>
+        </button>
+        <button class="control-btn" id="next-btn" title="Следующий">
+          <span class="icon icon-next"></span>
+        </button>
+        <span class="time-display">1:02 / 3:36</span>
+      </div>
+
+      <div class="player-center">
+        <div
+          class="player-thumbnail"
+          style="background: linear-gradient(135deg, #a03b5a, #621b2f)"></div>
+        <div class="player-text">
+          <h4 class="player-title">Часть 1.2 - Как изменить мышление...</h4>
+          <p class="player-author">Павел Федоренко</p>
+        </div>
+        <button class="control-btn add-track-btn" id="add-btn" title="Добавить">
+          <span class="icon icon-plus"></span>
+        </button>
+      </div>
+
+      <div class="player-right">
+        <button class="control-btn" title="Громкость">
+          <span class="icon icon-volume"></span>
+        </button>
+        <button class="control-btn" title="Скорость">
+          <span class="icon icon-speed"></span>
+        </button>
+        <button class="control-btn" title="Перемешать">
+          <span class="icon icon-shuffle"></span>
+        </button>
+      </div>
+    </aside>
+  </body>
+</html>

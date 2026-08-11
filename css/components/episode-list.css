@@ -1,0 +1,45 @@
+.tracklist-container {
+  width: 100%;
+}
+
+.tracklist-header {
+  display: flex;
+  align-items: center;
+  padding: 0 2.1rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.header-num {
+  text-align: center;
+  margin-right: 2.5rem;
+}
+
+.header-title {
+  max-width: 49.5rem;
+  flex-grow: 1; 
+  min-width: 10rem;
+}
+
+.header-data {
+  margin-right: 5.5rem;
+}
+
+.header-time {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tracklist-divider {
+  border: none;
+  height: 6px;
+  background-color: var(--border-color);
+  margin: 0.75rem 0;
+}
+
+.tracklist-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}

@@ -1,0 +1,9 @@
+:root {
+  --bg-body: #121216;
+  --bg-surface: #3b3b58;
+  --bg-player: #17171e;
+  --accent: #ff5e3a;
+  --text-primary: #ffffff;
+  --text-secondary: #90909a;
+  --border-color: rgba(255, 255, 255, 0.192);
+}
